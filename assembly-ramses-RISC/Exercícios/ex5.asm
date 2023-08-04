@@ -1,0 +1,83 @@
+;Implemente um programa no assembly Ramses que leia o vetor A de 10 posições e:
+;- se o valor for ímpar, o valores devem ser coppiados para o vetor X[0];
+;- se o valor for múltiplo de 4, copiar os valores para o vetor iniciadoem Y[0];
+;- se não atender nenhuma das condições anteriores, copiar o vetor iniciado em Z[0].
+; INDEXADO
+
+
+X1:				;TESTE NÚMERO ÍMPAR
+LDR X 128		;CARREGA O ÍNDICE USADO EM X1	
+LDR A 130, X
+AND A #1		;AND PRA TESTAR SE É IMPAR
+JZ Y			;QUANDO AND RESULTAR EM 0, ENTÃO A É PAR
+LDR X 128
+LDR A 130, X	;A VOLTA AO VALOR ORIGINAL
+LDR X 127		;
+STR A 140, X	;GUARDA O VALOR ÍMPAR EM SEU RESPECTIVO VETOR
+ADD X #1
+STR X 127		;GUARDA O NOVO ÍNDICE USADO EM X1
+JMP DENOVO
+
+
+DENOVO:			;CONTROLE DO ÍNDICE X
+LDR B 124	
+SUB B #9
+JZ FIM
+LDR B 124
+ADD B #1
+STR B 124
+				;SE X-10==0, ENTÃO O VETOR ACABOU
+LDR X 128
+ADD X #1
+STR X 128
+JMP X1
+
+
+Y:				;MULTIPLOS DE 4
+LDR X 128
+LDR A 130, X
+AND A #3		;AND PRA TESTAR SE É MULTIPLO DE 4
+JZ Y2
+
+
+Z:				;NÃO ATENDEU NEM X NEM Y
+LDR X 128
+LDR A 130, X
+LDR X 125		;CARREGA O ÍNDICE USADO EM Z
+STR A 160, X
+ADD X #1	
+STR X 125		;GUARDA O NOVO ÍNDICE USADO EM Z
+JMP DENOVO
+
+Y2:				;CONTINUAÇÃO MULTIPLO DE 4
+LDR X 128
+LDR A 130, X
+LDR X 126		;CARREGA O ÍNDICE USADO EM Y	
+STR A 150, X
+ADD X #1
+STR X 126		;GUARDA O NOVO ÍNDICE USADO EM Y
+JMP DENOVO
+
+
+FIM:			;MULTIPLOS DE 4
+HLT
+
+
+ORG 124
+DB 0
+DB 0
+DB 0
+DB 0
+DB 0
+
+ORG 130
+DB 2
+DB 5
+DB 8
+DB 7
+DB 9
+DB 11
+DB 12
+DB 10
+DB 4
+DB 6
